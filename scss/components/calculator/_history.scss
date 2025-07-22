@@ -1,0 +1,444 @@
+@use "./../../abstracts" as *;
+
+.calculator__history {
+    @include flex(unset, unset, column);
+    padding: var(--SPACING-MD);
+    position: absolute;
+    top: 30vh;
+    transform: translateY(calc(-0.32 * clamp(100px, 80vh, 425px)));
+    z-index: 2;
+    width: clamp(150px, 95vw, 310px);
+    height: var(--HISTORY-PANEL-MOBILE-HEIGHT);
+    align-self: flex-start;
+    visibility: hidden;
+    animation: none;
+    order: 1;
+    color: var(--TEXT-COLOR);
+    animation: none;
+    
+    &.history-panel-active {
+        visibility: visible;
+        animation: show-history-panel-mobile 0.75s forwards;
+    }
+
+    &.history-panel-mobile-fade-out {
+        animation: fade-out 0.25s forwards !important;
+    }
+
+    &.history-panel-mobile-fade-in {
+        animation: fade-in 0.25s forwards !important;
+    }
+
+    @keyframes show-history-panel-mobile {
+        from { 
+            height: 0; 
+            opacity: 0;
+        }
+        30% {
+            opacity: 0.8;
+        }
+        to { 
+            opacity: 1;
+            height: var(--HISTORY-PANEL-MOBILE-HEIGHT);
+        }
+    }
+
+    @keyframes hide-history-panel-mobile {
+        from {
+            opacity: 1;
+            visibility: visible;
+            height: var(--HISTORY-PANEL-MOBILE-HEIGHT);
+        }
+        70% {
+            opacity: 0.8;
+        }
+        to { 
+            height: 0;
+            opacity: 0;
+        }
+    }
+
+    h3 {
+        @extend %offscreen;
+    }
+
+    &-header {
+        @include flex(flex-end, center);
+        padding: var(--SPACING-SM);
+        animation: fade-out 1.25s forwards;
+
+        &.history-header-active {
+            animation: fade-in 0.25s backwards;
+        }
+
+        button {
+            @include neumorphic-btn(HEADER);
+            margin-right: var(--SPACING-XS);
+            padding: var(--SPACING-MD) var(--SPACING-LG);
+            font-size: var(--FS-SM);
+        }
+    }
+
+    &-entries {
+        flex-grow: 1;
+        padding: var(--SPACING-MD);
+        padding-bottom: 0;
+        margin: var(--SPACING-SM);
+        overflow-x: hidden;
+        overflow-y: auto;
+        animation: fade-out 1.5s forwards;
+
+        &.entries-active {
+            animation: fade-in 0.25s backwards;
+        }
+
+        &::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: var(--CALC-SCROLLBAR-TRACK);
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--CALC-SCROLLBAR);
+            border-radius: 10px;
+        }
+        
+        &::-webkit-scrollbar-thumb:hover {
+            background: var(--CALC-SCROLLBAR-HOVER);
+        }
+
+        .calculator__history-empty {
+            text-align: center;
+            @extend %nowrap;
+            animation: fade-in 0.35s;
+            font-size: var(--FS-SM);
+        }
+
+        .calculator__history-entry {
+            @include flex(center, flex-end, column);
+            border-top: 1px solid var(--CALC-HISTORY-BORDER-COLOR);
+            padding: var(--SPACING-MD) 0;
+
+            .entry-header {
+                width: 100%;
+                @include flex(center, center);
+                gap: var(--SPACING-XS);
+
+                &-time {
+                    flex-grow: 1;
+                    padding-left: var(--SPACING-MD);
+                    @extend %nowrap;
+                    font-size: calc(var(--FS-SM) * 1.1);
+                }
+
+                &-copy, &-delete {
+                    background-color: transparent;
+                    color: var(--TEXT-COLOR);
+                    border: none;
+                    padding: var(--SPACING-MD);
+                    cursor: pointer;
+                    font-size: calc(var(--FS-SM) * 1.1);
+                    line-height: calc(var(--FS-SM) * 1.25);
+                    border-radius: clamp(2px, 2.25vw, 8px);
+                    display: grid;
+                    place-content: center;
+                    transition: 
+                        transform 0.15s, 
+                        background-color 0.125s;
+                    
+                    > i {
+                        scale: 1.1;
+                    }
+
+                    &:hover, &:focus-visible {
+                        background-color: var(--PANEL-LIGHT);
+                    }
+        
+                    &:active {
+                        transform: scale(0.925);
+                        transition: transform 0.075s;
+                        background-color: var(--PANEL-DARK);
+                    }
+                }
+            }
+            
+            .entry-body {
+                width: 100%;
+                padding: 0 var(--SPACING-MD);
+
+                .entry-input {
+                    width: 100%;
+                    text-align: right;
+                    margin-bottom: 3px;
+                    overflow-x: auto;
+                    @extend %nowrap;
+                    font-size: var(--FS-SM);
+        
+                    &::-webkit-scrollbar {
+                        height: 1px;
+                    }
+        
+                    &::-webkit-scrollbar-track {
+                        background: var(--CALC-SCROLLBAR-TRACK);
+                        border-radius: 10px;
+                    }
+        
+                    &::-webkit-scrollbar-thumb {
+                        background: var(--CALC-SCROLLBAR);
+                        border-radius: 10px;
+                    }
+                    
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: var(--CALC-SCROLLBAR-HOVER);
+                    }
+                }
+
+                .entry-output {
+                    width: 100%;
+                    font-size: var(--FS-MD);
+                    text-align: right;
+                    overflow-x: auto;
+                    @extend %nowrap;
+        
+                    &::-webkit-scrollbar {
+                        height: 1px;
+                    }
+        
+                    &::-webkit-scrollbar-track {
+                        background: var(--CALC-SCROLLBAR-TRACK);
+                        border-radius: 10px;
+                    }
+        
+                    &::-webkit-scrollbar-thumb {
+                        background: var(--CALC-SCROLLBAR);
+                        border-radius: 10px;
+                    }
+                    
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: var(--CALC-SCROLLBAR-HOVER);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-landscape {
+    .calculator__history {
+        top: 0;
+        transform: translateY(0);
+        height: clamp(80px, 80vh, 300px);
+
+        &-entries .calculator__history-entry .entry-header :is(.entry-header-copy, .entry-header-delete) {
+            border-radius: clamp(2px, 1.75vh, 6px);
+        }
+    }
+}
+
+@include media-xs {
+    .calculator__history {
+        transform: translateY(calc(-0.32 * clamp(340px, 75vh, 610px)));
+        width: clamp(280px, 94vw, 450px);
+
+        &-entries .calculator__history-entry .entry-header :is(.entry-header-copy, .entry-header-delete) {
+            border-radius: clamp(4px, 2.25vw, 10px);
+        }
+    }
+}
+
+@include media-xs-landscape {
+    .calculator__history {
+        top: 0;
+        transform: translateY(0);
+        width: clamp(300px, 96vw, 550px);
+
+        &-entries .calculator__history-entry .entry-header :is(.entry-header-copy, .entry-header-delete) {
+            border-radius: clamp(5px, 2vh, 10px);
+        }
+    }
+}
+
+@include media-sm {
+    .calculator__history {
+        transform: translateY(calc(-0.32 * clamp(510px, 84vh, 720px)));
+        width: clamp(495px, 75vw, 530px);
+
+        &-entries::-webkit-scrollbar {
+            width: 3px;
+        }
+    }
+}
+
+@include media-sm-landscape {
+    .calculator__history {
+        top: 0;
+        transform: translateY(0);
+        width: clamp(525px, 90vw, 700px);
+
+        &-entries .calculator__history-entry .entry-header :is(.entry-header-copy, .entry-header-delete) {
+            border-radius: clamp(6px, 2vh, 10px);
+        }
+    }
+}
+
+@include media-md {
+    .calculator__history {
+        @include neumorphic(CALC);
+        width: clamp(225px, 37vw, 307.5px);
+        height: clamp(450px, 80vh, 615px);
+        position: static;
+        z-index: 0;
+        align-self: center;
+        visibility: visible;
+        overflow: hidden;
+        display: none;
+        animation: hide-history-panel 0.35s 0.05s backwards;
+        transform: translateY(0);
+
+        &.history-panel-active {
+            @include flex(unset, unset, column);
+            animation: show-history-panel 0.35s forwards;
+        }
+        
+        @keyframes show-history-panel {
+            from { 
+                width: 0; 
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            to { 
+                opacity: 1;
+                width: clamp(225px, 37vw, 307.5px);
+            }
+        }
+
+        @keyframes hide-history-panel {
+            from { 
+                @include flex(unset, unset, column);
+                opacity: 1;
+                width: clamp(225px, 37vw, 307.5px);
+            }
+            70% {
+                opacity: 0.5;
+            }
+            to { 
+                width: 0; 
+                padding: 0;
+                opacity: 0;
+            }
+        }
+
+        &-header {
+            animation: fade-out 0.15s forwards;
+    
+            &.history-header-active {
+                animation: fade-in 0.15s 0.125s backwards;
+            }
+        }
+    
+        &-entries {
+            animation: fade-out 0.15s forwards;
+    
+            &.entries-active {
+                animation: fade-in 0.15s 0.125s backwards;
+            }
+
+            .calculator__history-entry .entry-header {
+                gap: 0;
+
+                &-time {
+                    font-size: var(--FS-SM);
+                }
+
+                &-copy, &-delete {
+                    font-size: var(--FS-SM);
+                    line-height: var(--FS-SM);
+                }
+            }
+        }
+
+        &-entries .calculator__history-entry .entry-header :is(.entry-header-copy, .entry-header-delete) {
+            border-radius: max(9px, 0.585vw);
+        }
+    }
+}
+
+@include media-lg {
+    .calculator__history {
+        width: 325px;
+        height: clamp(550px, 81vh, 650px);
+
+        @keyframes show-history-panel {
+            from { 
+                width: 0; 
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            to { 
+                opacity: 1;
+                width: 325px;
+            }
+        }
+
+        @keyframes hide-history-panel {
+            from { 
+                @include flex(unset, unset, column);
+                opacity: 1;
+                width: 325px;
+            }
+            70% {
+                opacity: 0.5;
+            }
+            to { 
+                width: 0; 
+                padding: 0;
+                opacity: 0;
+            }
+        }
+    }
+}
+
+@include media-xl {
+    .calculator__history {
+        width: max(325px, 20.5vw);
+        height: max(650px, 41vw);
+        border-radius: max(32px, 2.08vw);
+
+        @keyframes show-history-panel {
+            from { 
+                width: 0; 
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            to { 
+                opacity: 1;
+                width: max(325px, 20.5vw);
+            }
+        }
+
+        @keyframes hide-history-panel {
+            from { 
+                @include flex(unset, unset, column);
+                opacity: 1;
+                width: max(325px, 20.5vw);
+            }
+            70% {
+                opacity: 0.5;
+            }
+            to { 
+                width: 0; 
+                padding: 0;
+                opacity: 0;
+            }
+        }
+    }
+}

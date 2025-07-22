@@ -1,0 +1,17 @@
+@use "./../abstracts" as *;
+
+header {
+    @include flex(center);
+    padding: var(--SPACING-MD);
+    background-color: var(--MAIN-COLOR-COVER);
+    position: relative;
+
+    h1 {
+        @extend %nowrap;
+        font-size: var(--FS-LG);
+        line-height: var(--FS-XL);
+        text-align: center;
+        color: var(--TEXT-COLOR);
+        transform: translateX(1.25%);
+    }
+}

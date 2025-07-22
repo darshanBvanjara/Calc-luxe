@@ -1,0 +1,22 @@
+@use "./../../abstracts" as *;
+
+.github__btn {
+    @extend %link;
+    padding: var(--SPACING-SM);
+    font-size: var(--FS-MD);
+    font-weight: bold;
+    text-decoration: none;
+    background: none;
+    border: none;
+    display: none;
+
+    i {
+        font-size: var(--FS-BTN-LG);
+    }
+}
+
+@include media-md {
+    .github__btn {
+        display: block;
+    }
+}

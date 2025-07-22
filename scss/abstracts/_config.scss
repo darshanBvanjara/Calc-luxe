@@ -1,0 +1,106 @@
+// helper functions, mixins, and placeholders go here
+
+%offscreen {
+    position: absolute;
+    left: -10000px;
+}
+
+%nowrap {
+    white-space: nowrap;
+}
+
+%link {
+    display: inline-block;
+    transition: scale 0.125s;
+
+    &:any-link {
+        color: var(--TEXT-COLOR)
+    }
+
+    &:hover, &:focus-visible {
+        scale: 1.025;
+    }
+
+    &:active {
+        scale: 0.975;
+    }
+}
+
+@mixin flex($justify: center, $align: center, $direction: row, $wrap: nowrap) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-flow: $direction $wrap;
+}
+
+@mixin neumorphic($type) {
+    background-color: var(--CALC-BG-LIGHT);
+    background-image: linear-gradient(
+        135deg, 
+        var(--CALC-BG-DARK),
+        var(--CALC-BG-LIGHT), 
+        var(--CALC-BG-LIGHT), 
+        var(--CALC-BG-DARK));
+    border-radius: 32px;
+    border: 1px solid var(--CALC-BORDER-COLOR);
+    backdrop-filter: blur(2px);
+    box-shadow: var(--#{$type}-SHADOW);
+}
+
+@mixin button($type) {
+    color: var(--TEXT-COLOR);
+    cursor: pointer;
+
+    @if $type == CALC {
+        transition: 
+            text-shadow 0.125s, 
+            filter 0.08s,
+            box-shadow 0.25s,
+            transform 0.25s;
+
+        span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        &:hover, &:focus-visible {
+            filter: brightness(1.075);
+            box-shadow: var(--BTN-SHADOW-ACTIVE);
+            transform: translate(0, -1%);
+        }
+
+        &:active, &.pressed {
+            filter: brightness(0.925);
+            transform: translate(0, 1%);
+            transition: 
+                text-shadow 0.125s, 
+                filter 0.075s,
+                box-shadow 0.075s,
+                transform 0.0075s;
+        }
+    }
+    @else {
+        transition: 
+            border-radius 0.25s, 
+            filter 0.25s,
+            box-shadow 0.25s,
+            scale 0.125s;
+    
+        &:hover, &:focus-visible {
+            filter: brightness(var(--BTN-HOVER-BRIGHTNESS));
+        }
+    
+        &:active, &.pressed {
+            scale: 0.975;
+            filter: brightness(0.95);
+            transition: 
+                filter 0.075s,
+                scale 0.075s;
+        }
+    }
+}
+
+@mixin neumorphic-btn($type) {
+    @include neumorphic($type);
+    @include button($type);
+}

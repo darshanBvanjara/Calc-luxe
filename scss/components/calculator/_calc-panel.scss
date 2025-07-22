@@ -1,0 +1,193 @@
+@use "./../../abstracts" as *;
+
+.calculator__panel {
+    padding: var(--SPACING-MD);
+    margin: var(--SPACING-SM);
+    margin-bottom: 0;
+    color: var(--TEXT-COLOR);
+    position: relative;
+    animation: none;
+
+    &.mobile-active {
+        animation: slide-down 0.85s forwards;
+    }
+
+    @keyframes slide-down {
+        from {
+            top: 0%;
+            translate: 0 0;
+        }
+        to {
+            top: 100%;
+            translate: 0 -100%;
+        }
+    }
+
+    @keyframes slide-up {
+        from {
+            top: 100%;
+            translate: 0 -100%;
+        }
+        to {
+            top: 0%;
+            translate: 0 0%;
+        }
+    }
+
+    h3 {
+        @extend %offscreen;
+    }
+
+    &-header {
+        @include flex(space-between, center);
+    
+        .calculator-error {
+            justify-self: flex-start;
+            align-self: flex-start;
+            padding-left: var(--SPACING-MD);
+            opacity: 0;
+            color: var(--TEXT-COLOR);
+            animation: unset;
+            font-size: var(--FS-SM);
+        }
+    
+        #calculator-history-btn {
+            @include neumorphic-btn(HEADER);
+            width: var(--FS-XL);
+            aspect-ratio: 1/1;
+            border-radius: 50% 50% 0 50%;
+            font-size: var(--FS-SM);
+            position: relative;
+        
+            i {
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+    
+            #open-history {
+                animation: fade-in 0.5s forwards;
+            }
+    
+            #close-history {
+                display: none;
+                opacity: 0;
+                // animation: fade-out 0.25s forwards;
+            }
+
+            #close-history-mobile {
+                opacity: 0;
+            }
+    
+            &.history-active {
+                border-radius: 50% 0 50% 50%;
+                
+                #open-history {
+                    animation: fade-out 0.25s forwards;
+                }
+    
+                #close-history {
+                    animation: fade-in 0.5s forwards;
+                }
+
+                #close-history-mobile {
+                    animation: fade-in 0.5s forwards;
+                }
+            }
+        }
+    }
+
+    &-output {
+        @include flex(center, flex-end, column);
+        padding-top: 0.5rem;
+
+        &-main {
+            @extend %nowrap;
+            font-size: var(--FS-XL);
+            text-align: right;
+            flex-grow: 1;
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            outline-color: transparent;
+            padding: var(--SPACING-SM);
+            padding-bottom: 0;
+            margin-bottom: 3px;
+            overflow-x: auto;
+            
+            &::-webkit-scrollbar {
+                height: 3px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: var(--CALC-SCROLLBAR-TRACK);
+                border-radius: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: var(--CALC-SCROLLBAR);
+                border-radius: 10px;
+            }
+            
+            &::-webkit-scrollbar-thumb:hover {
+                background: var(--CALC-SCROLLBAR-HOVER);
+            }
+        }
+
+        &-prev {
+            @extend %nowrap;
+            width: 100%;
+            text-align: right;
+            padding: var(--SPACING-SM);
+            padding-bottom: 0;
+            margin-bottom: 3px;
+            overflow-x: auto;
+            font-size: var(--FS-SM);
+
+            &::-webkit-scrollbar {
+                height: 3px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: var(--CALC-SCROLLBAR-TRACK);
+                border-radius: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: var(--CALC-SCROLLBAR);
+                border-radius: 10px;
+            }
+            
+            &::-webkit-scrollbar-thumb:hover {
+                background: var(--CALC-SCROLLBAR-HOVER);
+            }
+        }
+    }
+}
+
+@include media-md {
+    .calculator__panel {
+        animation: none;
+
+        &.mobile-active {
+            animation: none;
+        }
+
+        &-header #calculator-history-btn {
+
+            #close-history {
+                display: inline-block;
+            }
+
+            #close-history-mobile {
+                display: none;
+            }
+
+            &.history-active {
+                border-radius: 50% 50% 0 50%;
+            } 
+        }
+    }
+}

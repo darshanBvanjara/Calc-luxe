@@ -1,0 +1,151 @@
+@use "./../../abstracts" as *;
+
+.keyboard-shortcuts {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-left: var(--SPACING-LG);
+    color: var(--TEXT-COLOR);
+
+    &__btn {
+        @include neumorphic-btn(HEADER);
+        padding: var(--SPACING-MD);
+        padding-right: calc(var(--SPACING-MD) + 2px);
+        position: relative;
+        transform: translateY(-50%);
+        font-size: var(--FS-SM);
+
+        #open-keyboard-shortcuts {
+            animation: fade-in 0.5s forwards;
+        }
+
+        #close-keyboard-shortcuts {
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            transform: translate(80%, -45%);
+            opacity: 0;
+            
+            // animation: fade-out 0.25s forwards;
+        }
+
+        &.keyboard-shortcuts-active {
+
+            #open-keyboard-shortcuts {
+                animation: fade-out 0.25s forwards;
+            }
+
+            #close-keyboard-shortcuts {
+                animation: fade-in 0.5s forwards;
+            }
+        }
+    }
+
+    &__panel {
+        display: none;
+        @include neumorphic(HEADER);
+        padding: var(--SPACING-MD);
+        border-radius: 10px;
+        position: relative;
+        border-collapse: collapse;
+        overflow: hidden;
+        animation: hide-keyboard-shortcuts-panel 0.5s forwards;
+        z-index: 2;
+
+        &.panel-active {
+            display: block;
+            animation: show-keyboard-shortcuts-panel 0.5s forwards;
+        }
+
+        @keyframes show-keyboard-shortcuts-panel {
+            from { 
+                height: 0; 
+                padding-bottom: 0;
+                opacity: 0;
+            }
+            30% {
+                padding-bottom: var(--SPACING-MD);
+                opacity: 0.8;
+            }
+            to { 
+                opacity: 1;
+                height: var(--KEYBOARD-SHORTCUTS-HEIGHT); 
+            }
+        }
+
+        @keyframes hide-keyboard-shortcuts-panel {
+            from { 
+                display: block;
+                opacity: 1;
+                height: var(--KEYBOARD-SHORTCUTS-HEIGHT);
+                padding-bottom: var(--SPACING-MD);
+            }
+            70% {
+                opacity: 0.5;
+            }
+            to { 
+                height: 0; 
+                opacity: 0;
+                padding-bottom: 0;
+            }
+        }
+
+        tbody tr {
+            position: relative;
+
+            td:first-child {
+                padding: var(--SPACING-SM)  0 var(--SPACING-MD) 0;
+                position: relative;
+                padding-right: var(--SPACING-MD);
+
+                .kbd {
+                    display: inline;
+
+                    kbd {
+                        z-index: 1;
+                        vertical-align: middle;
+                        border-radius: 5px;
+                        padding: 1px 5px;
+                        border: 1px solid var(--TEXT-COLOR);
+                        box-shadow: 0 1px 0 var(--TEXT-COLOR);
+                        font-size: calc(var(--FS-XS) - 1px);
+                    }
+                }
+
+                .line {
+                    z-index: 3;
+                    width: 0px;
+                    height: 1px;
+                    background-color: var(--TEXT-COLOR);
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    transform: translate(calc(-1 * var(--SPACING-MD)), -50%);
+                }
+            }
+            
+            td:last-child {
+                font-size: var(--FS-XS);            
+            }
+        }
+
+        th {
+            text-align: left;
+            padding-bottom: var(--SPACING-SM);
+            font-size: var(--FS-SM); 
+        }
+    }
+}
+
+@include media-md {
+    .keyboard-shortcuts {
+        display: block;
+    }
+}
+
+@include media-xl {
+    .keyboard-shortcuts .keyboard-shortcuts__panel {
+        border-radius: max(10px, 0.65vw);
+    }
+}

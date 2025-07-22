@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Kevin Tang">
+    <meta name="keywords" content="Calculator, PEMDAS, History, Aesthetic">
+    <meta name="description" content="A visually appealing and responsive calculator that supports PEMDAS with multiple themes, keyboard integration, and a history feature.">
+    <title>Calcūluxe</title>
+    <link rel="icon" href="./assets/favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/5.2.2/big.min.js"></script>
+    <script type="module" src="./js/main.js"></script>
+
+    <!-- SEO --
+        I know what it is, but I don't know much about implementing it. 
+        For now, this is just some boilerplate I found online.
+        Though, I don't think anyone will be using this website at all, so this won't do much :)
+    -->
+    <meta property="og:title" content="Aesthetic Calculator">
+    <meta property="og:description" content="A visually appealing and responsive calculator that supports PEMDAS with multiple themes, keyboard integration, and a history feature.">
+    <meta property="og:image" content="https://kevster7000.github.io/Aesthetic-Calculator/assets/favicon.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta property="og:url" content="https://kevster7000.github.io/Aesthetic-Calculator/">
+    <link rel="canonical" href="https://kevster7000.github.io/Aesthetic-Calculator/">
+    <link rel="apple-touch-icon" href="./assets/favicon.png">
+</head>
+
+<body id="outer-container">
+    <header>
+        <div class="keyboard-shortcuts">
+            <button class="keyboard-shortcuts__btn">
+                <i id="open-keyboard-shortcuts" class="fa-solid fa-chevron-down"></i>
+                <i id="close-keyboard-shortcuts" class="fa-solid fa-xmark"></i>
+                Keyboard Shortcuts
+            </button>
+
+            <table class="keyboard-shortcuts__panel">
+                <thead>
+                    <tr>
+                        <th>Shortcut</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>*</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Multiply</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>/</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Divide</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>Enter</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Equals</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>Backspace</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Delete</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>Escape</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Clear</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>N</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>New Background</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>K</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Show Shortcuts</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>H</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Show History</td>
+                    </tr>
+                        <td>
+                            <div class="kbd"><kbd>T</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Show Themes</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>Space</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Press Button</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>Tab</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Next Button</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kbd"><kbd>Shift</kbd> + <kbd>Tab</kbd></div>
+                            <div class="line"></div>
+                        </td>
+                        <td>Previous Button</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h1>Calcūluxe</h1>
+
+        <div class="mobile-options">
+            <button class="mobile-options__button">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <div class="mobile-options__panel">
+                <button class="mobile-options__themes-btn">
+                    <div class="mobile-options__themes-current"></div>
+                    Select Theme
+                </button>
+                <a href="https://github.com/kevster7000/Aesthetic-Calculator" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                    View GitHub
+                </a>
+            </div>
+        </div>
+
+        <nav class="themes">
+            <h2>Select Theme</h2>
+
+            <button class="themes__btn">
+                <div class="themes__current"></div>
+                <span class="themes__text">Select Theme</span>
+                <i id="open-themes" class="fa-solid fa-chevron-down"></i>
+                <i id="close-themes" class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="themes__panel">
+                <div class="themes__panel-mobile-current">
+                    Current Theme
+                    <div class="themes__current"></div>
+                </div>
+                <button class="themes__panel-mobile-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <!-- populated with JS -->
+            </div>
+        </nav>
+    </header>
+    <div class="mobile-options__cover"></div>
+
+    <main class="calculator__container">
+        <section class="calculator__history">
+            <h3>Calculator History</h3>
+
+            <div class="calculator__history-header">
+                <button>Clear History</button>
+            </div>
+
+            <div class="calculator__history-entries">
+                <!-- populated with JS -->
+            </div>
+        </section>
+        <div class="calculator">
+            <section class="calculator__panel">
+                <h3>Calculator Panel</h3>
+
+                <div class="calculator__panel-header">
+                    <p class="calculator-error">Error</p>
+                    <button id="calculator-history-btn">
+                        <i id="open-history" class="fa-solid fa-clock-rotate-left"></i>
+                        <i id="close-history" class="fa-solid fa-xmark"></i>
+                        <i id="close-history-mobile" class="fa-solid fa-arrow-up"></i>
+                    </button>
+                </div>
+                    
+                <div class="calculator__panel-output">
+                    <p class="calculator__panel-output-prev">&nbsp;</p>
+                    <p class="calculator__panel-output-main">&nbsp;</p>
+                </div>
+            </section>
+
+            <section class="calculator__btns">
+                <h3>Calculator Buttons</h3>
+                
+                <button type="button" id="calculator__theme-header"><span>New Background</span></button>
+
+                <button type="button" id="btn-del" class="btn-special"><span><i class="fa-solid fa-delete-left"></i></span></button>
+                <button type="button" id="btn-cle" class="btn-special"><span>Clear</span></button>
+
+                <button type="button" id="btn-pa1" class="btn-operator"><span>(</span></button>
+                <button type="button" id="btn-pa2" class="btn-operator"><span>)</span></button>
+                <button type="button" id="btn-per" class="btn-operator"><span>%</span></button>
+                <button type="button" id="btn-exp" class="btn-operator"><span>^</span></button>
+
+                <button type="button" id="btn-b7" class="btn-operand"><span>7</span></button>
+                <button type="button" id="btn-b8" class="btn-operand"><span>8</span></button>
+                <button type="button" id="btn-b9" class="btn-operand"><span>9</span></button>
+
+                <button type="button" id="btn-div" class="btn-operator"><span>&#247;</span></button>
+
+                <button type="button" id="btn-b4" class="btn-operand"><span>4</span></button>
+                <button type="button" id="btn-b5" class="btn-operand"><span>5</span></button>
+                <button type="button" id="btn-b6" class="btn-operand"><span>6</span></button>
+
+                <button type="button" id="btn-mul" class="btn-operator"><span>&#215;</span></button>
+
+                <button type="button" id="btn-b1" class="btn-operand"><span>1</span></button>
+                <button type="button" id="btn-b2" class="btn-operand"><span>2</span></button>
+                <button type="button" id="btn-b3" class="btn-operand"><span>3</span></button>
+
+                <button type="button" id="btn-sub" class="btn-operator"><span>-</span></button>
+
+                <button type="button" id="btn-b0" class="btn-operand"><span>0</span></button>
+                <button type="button" id="btn-dec" class="btn-operand"><span>.</span></button>
+
+                <button type="button" id="btn-eq" class="btn-special"><span>=</span></button>
+
+                <button type="button" id="btn-add" class="btn-operator"><span>+</span></button>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <a class="github__btn" href="https://github.com/kevster7000/Aesthetic-Calculator" target="_blank">
+            <i class="fa-brands fa-github"></i>
+            <span class="github__text">GitHub</span>
+        </a>
+        <p class="credits">
+            Photos from <a href="https://unsplash.com/" target="_blank">Unsplash</a>
+        </p>
+    </footer>
+</body>
+</html>
